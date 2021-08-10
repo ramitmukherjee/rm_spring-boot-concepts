@@ -1,7 +1,10 @@
 package com.rm.spring.concepts.services;
 
+import com.rm.spring.concepts.config.configprops.FileProperties;
+
 public interface PropertyInjectionDemoService {
 
-	public void runUploadedFiles();
+	public String usingValueAnnotation();
+	public FileProperties usingConfigurationPropertiesAnnotation();
 	
 }

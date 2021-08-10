@@ -17,28 +17,37 @@ import com.rm.spring.concepts.services.PropertyInjectionDemoService;
 public class PropertyInjectionDemoServiceImpl implements PropertyInjectionDemoService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PropertyInjectionDemoServiceImpl.class);
-	
+
 	@Value("${file.max-size}")
 	Integer maxSize;
-	
+
 	@Value("${file.valid-extensions}")
 	List<String> validExtensions;
-	
+
 	@Autowired
 	FileProperties fileProperties;
-	
+
 	@Override
-	public void runUploadedFiles() {
-		
+	public String usingValueAnnotation() {
 		LOGGER.info("----------------------");
-		
+
 		LOGGER.info("@Value Max Size: {}", this.maxSize);
 		LOGGER.info("@Value Valid Extensions: {}", this.validExtensions);
-		
+
+		LOGGER.info("----------------------");
+		return String.format("maxSize: %s; validExtensions: %s", this.maxSize, this.validExtensions);
+	}
+
+	@Override
+	public FileProperties usingConfigurationPropertiesAnnotation() {
+		LOGGER.info("----------------------");
+
 		LOGGER.info("@ConfigurationProperties Max Size: {}", fileProperties.getMaxSize());
 		LOGGER.info("@ConfigurationProperties  Valid Extensions: {}", fileProperties.getValidExtensions());
-		
+
 		LOGGER.info("----------------------");
+		
+		return fileProperties;
 	}
 
 }
