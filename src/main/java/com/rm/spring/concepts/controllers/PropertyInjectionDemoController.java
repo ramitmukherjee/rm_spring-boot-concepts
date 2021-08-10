@@ -14,17 +14,22 @@ import com.rm.spring.concepts.services.PropertyInjectionDemoService;
 public class PropertyInjectionDemoController {
 
 	@Autowired
-	PropertyInjectionDemoService runService;
+	PropertyInjectionDemoService propertyInjectionDemoService;
 	
 	@GetMapping("/value")
 	public String usingValueAnnotation() {
-		return runService.usingValueAnnotation();
+		return propertyInjectionDemoService.usingValueAnnotation();
 	}
 	
 	@GetMapping("/config-prop")
 	public FilePropertiesModel usingConfigurationPropertyAnnotation() {
-		FileProperties fp = runService.usingConfigurationPropertiesAnnotation();
+		FileProperties fp = propertyInjectionDemoService.usingConfigurationPropertiesAnnotation();
 		return new FilePropertiesModel(fp.getMaxSize(), fp.getValidExtensions());
+	}
+	
+	@GetMapping("/environment")
+	public String usingEnvironmentObject() {
+		return this.propertyInjectionDemoService.usingEnvironmentObject();
 	}
 	
 }

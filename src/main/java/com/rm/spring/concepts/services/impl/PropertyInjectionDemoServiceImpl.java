@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.rm.spring.concepts.config.configprops.FileProperties;
@@ -27,6 +28,9 @@ public class PropertyInjectionDemoServiceImpl implements PropertyInjectionDemoSe
 	@Autowired
 	FileProperties fileProperties;
 
+	@Autowired
+	Environment environment;
+	
 	@Override
 	public String usingValueAnnotation() {
 		LOGGER.info("----------------------");
@@ -35,7 +39,7 @@ public class PropertyInjectionDemoServiceImpl implements PropertyInjectionDemoSe
 		LOGGER.info("@Value Valid Extensions: {}", this.validExtensions);
 
 		LOGGER.info("----------------------");
-		return String.format("maxSize: %s; validExtensions: %s", this.maxSize, this.validExtensions);
+		return String.format("Using @Value | maxSize: %s; validExtensions: %s", this.maxSize, this.validExtensions);
 	}
 
 	@Override
@@ -43,11 +47,17 @@ public class PropertyInjectionDemoServiceImpl implements PropertyInjectionDemoSe
 		LOGGER.info("----------------------");
 
 		LOGGER.info("@ConfigurationProperties Max Size: {}", fileProperties.getMaxSize());
-		LOGGER.info("@ConfigurationProperties  Valid Extensions: {}", fileProperties.getValidExtensions());
+		LOGGER.info("@ConfigurationProperties Valid Extensions: {}", fileProperties.getValidExtensions());
 
 		LOGGER.info("----------------------");
 		
 		return fileProperties;
+	}
+
+	@Override
+	public String usingEnvironmentObject() {
+		return String.format("Using Spring Environment Object | environment.getProperty(\"file.max-size\"): %s",
+				environment.getProperty("file.max-size"));
 	}
 
 }
